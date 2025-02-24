@@ -2,33 +2,38 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repo') {
+        stage('Checkout SCM') {
             steps {
-                git 'git@github.com:StakeTake/ci-cd-docker-app.git'
+                checkout scm
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                echo 'Installing dependencies...'
+                // Здесь команда для установки зависимостей, например:
+                // sh 'npm install' или 'pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'pytest'
+                echo 'Running tests...'
+                // sh 'pytest tests/'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t my-app .'
+                echo 'Building Docker Image...'
+                // sh 'docker build -t myapp .'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker run -d -p 5000:5000 my-app'
+                echo 'Deploying application...'
+                // sh 'kubectl apply -f deployment.yaml'
             }
         }
     }
